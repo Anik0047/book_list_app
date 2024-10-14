@@ -164,3 +164,42 @@ body {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.book-details-page {
+  display: flex;
+  padding: 20px;
+}
+
+.book-cover {
+  width: 200px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.book-info {
+  max-width: 600px;
+}
+
+.book-info h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.book-info p {
+  margin-bottom: 8px;
+}
+
+.more-details-button {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.more-details-button:hover {
+  background-color: #0056b3;
+}

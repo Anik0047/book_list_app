@@ -29,17 +29,26 @@
 
         <!-- Search Bar -->
         <div class="search-bar">
-          <input type="text" placeholder="Search products..." />
+          <input type="text" placeholder="Search books..." />
           <button><i class="fas fa-search"></i></button>
         </div>
 
         <!-- Icons -->
         <div class="icons">
           <!-- Wishlist Link -->
-          <a href="wishlist.html"> <i class="fas fa-heart"></i></a>
+          <a href="wishlist.html">
+            <i class="fas fa-heart"></i><span id="wishlist-count"></span>
+          </a>
         </div>
       </div>
     </nav>
+
+    <label for="booksPerPage">Books per page:</label>
+    <select id="booksPerPage">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="15">15</option>
+    </select>
 
     <!-- Book Container -->
     <div id="book-container"></div>

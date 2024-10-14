@@ -1,7 +1,7 @@
 // API URL for all books
 const apiUrl = "https://gutendex.com/books/";
 let books = []; // Array to store fetched books
-const booksPerPage = 10; // Number of books to display per page
+let booksPerPage = 10; // Number of books to display per page
 let currentPage = 1; // Current page number
 
 // Reference to the container where books will be displayed
@@ -39,6 +39,8 @@ fetch(apiUrl)
     });
   })
   .catch((error) => {
+    bookContainer.innerHTML =
+      "<p>Error fetching books. Please try again later.</p>";
     console.error("Error fetching data:", error);
   });
 
@@ -56,6 +58,11 @@ searchInput.addEventListener("input", (e) => {
 
   // Clear the existing book list
   bookContainer.innerHTML = "";
+
+  if (currentBooks.length === 0) {
+    bookContainer.innerHTML = "<p>No books found.</p>";
+    return;
+  }
 
   // Render the filtered book list
   renderBooks(filteredBooks);
@@ -95,19 +102,25 @@ function renderBooks(bookList = books) {
 
   // Render the current page of books
   currentBooks.forEach((book) => {
-    renderBookCard(book);
+    renderBookCard(book); // Render each book card
   });
 
   // Render pagination controls
   renderPagination(totalPages);
 }
 
-// Function to render a single book card
+const booksPerPageDropdown = document.getElementById("booksPerPage");
+
+booksPerPageDropdown.addEventListener("change", (e) => {
+  booksPerPage = parseInt(e.target.value);
+  renderBooks();
+});
+
 function renderBookCard(book) {
   const title = book.title;
   const author =
     book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
-  const coverImage = book.formats["image/jpeg"] || "default-cover.jpg"; // Fallback if no cover image
+  const coverImage = book.formats["image/jpeg"] || "default-cover.jpg";
   const genre = book.subjects.length > 0 ? book.subjects[0] : "Unknown Genre";
   const id = book.id;
 
@@ -124,8 +137,11 @@ function renderBookCard(book) {
         <p class="book-genre">Genre: ${genre}</p>
         <p class="book-id">ID: ${id}</p>
         <button class="wishlist-button" data-id="${id}">
-          <i class="fa-heart ${isWishlisted ? "fa-solid" : "fa-regular"}"></i>
+          <i class="fa-solid fa-heart" style="color:${
+            isWishlisted ? "red" : "gray"
+          }"></i>
         </button>
+        <a href="details.html?id=${id}" class="more-details-button">More Details</a>
       </div>
     </div>
   `;
@@ -176,22 +192,22 @@ function renderPagination(totalPages) {
 bookContainer.addEventListener("click", (e) => {
   if (e.target.closest(".wishlist-button")) {
     const button = e.target.closest(".wishlist-button");
-    const bookId = button.getAttribute("data-id"); // Get the book ID
+    const bookId = button.getAttribute("data-id");
 
     // Toggle the wishlist status
     toggleWishlist(bookId);
+    updateWishlistCount(); // Update count when wishlist is modified
 
-    // Update the heart icon appearance
+    // Update the heart icon color based on the new wishlist status
     const heartIcon = button.querySelector(".fa-heart");
-    heartIcon.classList.toggle("fa-regular");
-    heartIcon.classList.toggle("fa-solid");
+    heartIcon.style.color = isBookInWishlist(bookId) ? "red" : "gray";
   }
 });
 
 // Function to check if a book is in the wishlist
 function isBookInWishlist(id) {
   const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  return wishlist.includes(id);
+  return wishlist.includes(id); // This will return true if the book is in the wishlist
 }
 
 // Function to add or remove a book from the wishlist
@@ -206,3 +222,12 @@ function toggleWishlist(id) {
 
   localStorage.setItem("wishlist", JSON.stringify(wishlist)); // Save updated wishlist
 }
+
+// Function to update wishlist counter
+function updateWishlistCount() {
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  document.getElementById("wishlist-count").textContent = wishlist.length;
+}
+
+// Call this function after the page loads
+updateWishlistCount();
