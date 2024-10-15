@@ -9,6 +9,7 @@ function renderBookCard(book) {
   const coverImage = book.formats["image/jpeg"] || "default-cover.jpg"; // Fallback if no cover image
   const genre = book.subjects.length > 0 ? book.subjects[0] : "Unknown Genre";
   const id = book.id;
+  document.getElementById("loader").style.display = "none";
 
   // Create a book card dynamically
   const bookCard = `

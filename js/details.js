@@ -16,6 +16,7 @@ fetch(`https://gutendex.com/books/${bookId}/`)
     const coverImage = book.formats["image/jpeg"] || "default-cover.jpg";
     const genre = book.subjects.length > 0 ? book.subjects[0] : "Unknown Genre";
     const description = book.description || "No description available.";
+    document.getElementById("loader").style.display = "none";
 
     // Update the details container with the fetched data
     bookDetailsContainer.innerHTML = `

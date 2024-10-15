@@ -36,6 +36,7 @@ fetch(apiUrl)
       option.value = genre; // Set the option's value
       option.textContent = genre; // Set the option's display text
       genreDropdown.appendChild(option); // Append to the dropdown
+      document.getElementById("loader").style.display = "none";
     });
   })
   .catch((error) => {
