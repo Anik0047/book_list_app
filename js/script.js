@@ -49,19 +49,26 @@ const searchInput = document.querySelector(".search-bar input");
 
 // Add event listener to the search bar
 searchInput.addEventListener("input", (e) => {
-  const searchTerm = e.target.value.toLowerCase(); // Convert search term to lowercase
+  // Capture the search term and convert it to lowercase
+  const searchTerm = e.target.value.toLowerCase();
 
-  // Filter books based on the search term
+  // Get the currently selected genre
+  const selectedGenre = genreDropdown.value;
+
+  // Filter books based on the search term and selected genre
   const filteredBooks = books.filter((book) => {
-    return book.title.toLowerCase().includes(searchTerm); // Match the search term with book titles
+    const matchesTitle = book.title.toLowerCase().includes(searchTerm);
+    const matchesGenre =
+      selectedGenre === "" || book.subjects.includes(selectedGenre);
+
+    // Return books that match both the search term and the selected genre
+    return matchesTitle && matchesGenre;
   });
 
-  // Clear the existing book list
-  bookContainer.innerHTML = "";
-
-  if (currentBooks.length === 0) {
+  // Check if any books match the search and genre criteria
+  if (filteredBooks.length === 0) {
     bookContainer.innerHTML = "<p>No books found.</p>";
-    return;
+    return; // Stop rendering if no books match
   }
 
   // Render the filtered book list
@@ -72,18 +79,20 @@ searchInput.addEventListener("input", (e) => {
 genreDropdown.addEventListener("change", (e) => {
   const selectedGenre = e.target.value; // Get the selected genre
 
+  // Get the current search term
+  const searchTerm = searchInput.value.toLowerCase();
+
+  // Filter books based on the selected genre and search term
+  const filteredBooks = books.filter((book) => {
+    const matchesTitle = book.title.toLowerCase().includes(searchTerm);
+    const matchesGenre =
+      selectedGenre === "" || book.subjects.includes(selectedGenre);
+
+    return matchesTitle && matchesGenre;
+  });
+
   // Clear the existing book list
   bookContainer.innerHTML = "";
-
-  // Filter books based on the selected genre
-  const filteredBooks = books.filter((book) => {
-    // Show all books if no genre is selected
-    if (selectedGenre === "") {
-      return true;
-    }
-    // Check if any of the book's subjects match the selected genre
-    return book.subjects.includes(selectedGenre); // Check for genre
-  });
 
   // Render the filtered book list
   renderBooks(filteredBooks);
@@ -109,13 +118,16 @@ function renderBooks(bookList = books) {
   renderPagination(totalPages);
 }
 
+// Reference to booksPerPage dropdown
 const booksPerPageDropdown = document.getElementById("booksPerPage");
 
+// Change the number of books displayed per page
 booksPerPageDropdown.addEventListener("change", (e) => {
   booksPerPage = parseInt(e.target.value);
   renderBooks();
 });
 
+// Function to render individual book cards
 function renderBookCard(book) {
   const title = book.title;
   const author =
@@ -136,12 +148,14 @@ function renderBookCard(book) {
         <p class="book-author">by ${author}</p>
         <p class="book-genre">Genre: ${genre}</p>
         <p class="book-id">ID: ${id}</p>
+        <div>
+        <a href="details.html?id=${id}" class="more-details-button">More Details</a>
         <button class="wishlist-button" data-id="${id}">
           <i class="fa-solid fa-heart" style="color:${
             isWishlisted ? "red" : "gray"
           }"></i>
         </button>
-        <a href="details.html?id=${id}" class="more-details-button">More Details</a>
+        </div>
       </div>
     </div>
   `;

@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: Arial, sans-serif;
 }
@@ -20,6 +25,11 @@ body {
   font-size: 24px;
   color: #ff5e50;
   margin-right: 5px;
+}
+
+.navbar .logo a {
+  text-decoration: none;
+  color: black;
 }
 
 .navbar .logo span {
@@ -83,27 +93,42 @@ body {
   font-size: 22px;
 }
 
+.genre-dropdown {
+  width: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #82848622;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 /* Container for the book cards */
 #book-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  gap: 20px;
+  /* align-items: center; */
+  /* gap: 20px; */
+  row-gap: 50px;
+  column-gap: 20px;
   margin-top: 50px;
 }
 
 /* Book card styling */
 .book-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: #fff;
+  margin: 0 10px;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  /* width: 200px; */
   text-align: center;
   transition: transform 0.3s ease;
+  /* border: 1px solid black; */
+  filter: drop-shadow(19px 19px 18px #a79595);
 }
 
 .book-card:hover {
@@ -193,13 +218,25 @@ body {
   margin-top: 10px;
   display: inline-block;
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #5b5d5f;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.4s ease;
 }
 
 .more-details-button:hover {
-  background-color: #0056b3;
+  border: 0;
+  color: black;
+  background-color: white;
+}
+
+.wishlist-button {
+  border: none;
+  background-color: white;
+  margin-left: 5px;
+}
+.wishlist-button i {
+  font-size: 25px;
 }
