@@ -14,3 +14,23 @@
   margin: 0 30px 60px 30px;
   margin-bottom: 80px;
 }
+.book-btn-wishlist {
+  position: absolute;
+  bottom: 25px;
+}
+.book-btn-wishlist .more-details-button {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #5b5d5f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+.book-btn-wishlist .more-details-button:hover {
+  border: 0;
+  color: black;
+  background-color: white;
+}

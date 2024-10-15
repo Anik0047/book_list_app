@@ -19,6 +19,9 @@ function renderBookCard(book) {
                 <p class="book-author">by ${author}</p>
                 <p class="book-genre">Genre: ${genre}</p>
                 <p class="book-id">ID: ${id}</p>
+                <div class="book-btn-wishlist">
+                  <a href="details.html?id=${id}" class="more-details-button">More Details</a>
+                </div>
             </div>
         </div>
     `;
