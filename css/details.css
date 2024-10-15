@@ -1,0 +1,20 @@
+.book-details-container {
+  margin-top: 50px;
+}
+
+.book-details-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+}
+.book-cover {
+  width: 300px;
+  height: 400px;
+}
+.book-info h1 {
+  margin: 10px 0;
+}
+.book-info p {
+  padding: 10px 0;
+}

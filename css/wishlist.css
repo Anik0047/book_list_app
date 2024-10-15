@@ -1,0 +1,16 @@
+.title-wishlist {
+  margin: 20px 0 40px;
+  text-align: center;
+}
+
+#wishlist-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  /* align-items: center; */
+  /* gap: 20px; */
+  row-gap: 40px;
+  column-gap: 40px;
+  margin: 0 30px 60px 30px;
+  margin-bottom: 80px;
+}

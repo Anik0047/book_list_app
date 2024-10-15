@@ -148,7 +148,7 @@ function renderBookCard(book) {
         <p class="book-author">by ${author}</p>
         <p class="book-genre">Genre: ${genre}</p>
         <p class="book-id">ID: ${id}</p>
-        <div>
+        <div class="book-btn">
         <a href="details.html?id=${id}" class="more-details-button">More Details</a>
         <button class="wishlist-button" data-id="${id}">
           <i class="fa-solid fa-heart" style="color:${
