@@ -21,27 +21,32 @@
           <i class="fas fa-book"></i>
           <a href="/"><span>BookFinder</span></a>
         </div>
-
-        <select class="genre-dropdown">
-          <option value="">All Genres</option>
-          <!-- Add more options as needed -->
-        </select>
-
-        <!-- Search Bar -->
-        <div class="search-bar">
-          <input type="text" placeholder="Search books..." />
-          <button><i class="fas fa-search"></i></button>
+    
+        <!-- Hamburger menu icon for mobile -->
+        <div class="hamburger" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
         </div>
-
-        <!-- Icons -->
-        <div class="icons">
-          <!-- Wishlist Link -->
-          <a href="wishlist.html">
-            <i class="fas fa-heart"></i><sup id="wishlist-count"></sup>
-          </a>
+    
+        <!-- Navbar links and search -->
+        <div class="nav-links">
+          <select class="genre-dropdown">
+            <option value="">All Genres</option>
+          </select>
+    
+          <div class="search-bar">
+            <input type="text" placeholder="Search books..." />
+            <button><i class="fas fa-search"></i></button>
+          </div>
+    
+          <div class="icons">
+            <a href="wishlist.html">
+              <i class="fas fa-heart"></i><sup id="wishlist-count"></sup>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
+    
 
     <!-- Loading Spinner -->
     <div id="loader">

@@ -1,6 +1,7 @@
 // API URL for all books
 const apiUrl = "https://gutendex.com/books/";
-let books = []; // Array to store fetched books
+let books = []; // Array to store all fetched books
+let filteredBooks = []; // Array to store filtered books
 let booksPerPage = 10; // Number of books to display per page
 let currentPage = 1; // Current page number
 
@@ -16,6 +17,7 @@ fetch(apiUrl)
   .then((data) => {
     // Get the array of books
     books = data.results;
+    filteredBooks = books; // Initially, filteredBooks is the same as books
 
     // Render the initial list of books
     renderBooks();
@@ -36,8 +38,9 @@ fetch(apiUrl)
       option.value = genre; // Set the option's value
       option.textContent = genre; // Set the option's display text
       genreDropdown.appendChild(option); // Append to the dropdown
-      document.getElementById("loader").style.display = "none";
     });
+
+    document.getElementById("loader").style.display = "none";
   })
   .catch((error) => {
     bookContainer.innerHTML =
@@ -48,64 +51,36 @@ fetch(apiUrl)
 // Get the search input element
 const searchInput = document.querySelector(".search-bar input");
 
-// Add event listener to the search bar
-searchInput.addEventListener("input", (e) => {
-  // Capture the search term and convert it to lowercase
-  const searchTerm = e.target.value.toLowerCase();
-
-  // Get the currently selected genre
-  const selectedGenre = genreDropdown.value;
+// Function to handle filtering books based on search and genre
+function filterBooks() {
+  const searchTerm = searchInput.value.toLowerCase(); // Get the search term
+  const selectedGenre = genreDropdown.value; // Get the selected genre
 
   // Filter books based on the search term and selected genre
-  const filteredBooks = books.filter((book) => {
+  filteredBooks = books.filter((book) => {
     const matchesTitle = book.title.toLowerCase().includes(searchTerm);
     const matchesGenre =
       selectedGenre === "" || book.subjects.includes(selectedGenre);
-
-    // Return books that match both the search term and the selected genre
     return matchesTitle && matchesGenre;
   });
 
-  // Check if any books match the search and genre criteria
-  if (filteredBooks.length === 0) {
-    bookContainer.innerHTML = "<p>No books found.</p>";
-    return; // Stop rendering if no books match
-  }
+  currentPage = 1; // Reset to page 1 whenever a new search or genre is applied
+  renderBooks(); // Re-render the filtered book list
+}
 
-  // Render the filtered book list
-  renderBooks(filteredBooks);
-});
+// Add event listener to the search bar
+searchInput.addEventListener("input", filterBooks);
 
 // Add event listener to the genre dropdown
-genreDropdown.addEventListener("change", (e) => {
-  const selectedGenre = e.target.value; // Get the selected genre
-
-  // Get the current search term
-  const searchTerm = searchInput.value.toLowerCase();
-
-  // Filter books based on the selected genre and search term
-  const filteredBooks = books.filter((book) => {
-    const matchesTitle = book.title.toLowerCase().includes(searchTerm);
-    const matchesGenre =
-      selectedGenre === "" || book.subjects.includes(selectedGenre);
-
-    return matchesTitle && matchesGenre;
-  });
-
-  // Clear the existing book list
-  bookContainer.innerHTML = "";
-
-  // Render the filtered book list
-  renderBooks(filteredBooks);
-});
+genreDropdown.addEventListener("change", filterBooks);
 
 // Function to render a list of books
-function renderBooks(bookList = books) {
+function renderBooks() {
   // Calculate the total number of pages
-  const totalPages = Math.ceil(bookList.length / booksPerPage);
+  const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
   const startIndex = (currentPage - 1) * booksPerPage;
   const endIndex = startIndex + booksPerPage;
-  const currentBooks = bookList.slice(startIndex, endIndex);
+  const currentBooks = filteredBooks.slice(startIndex, endIndex); // Use filteredBooks
 
   // Clear the existing book list
   bookContainer.innerHTML = "";
@@ -125,7 +100,8 @@ const booksPerPageDropdown = document.getElementById("booksPerPage");
 // Change the number of books displayed per page
 booksPerPageDropdown.addEventListener("change", (e) => {
   booksPerPage = parseInt(e.target.value);
-  renderBooks();
+  currentPage = 1; // Reset to page 1 when booksPerPage is changed
+  renderBooks(); // Re-render books with the new booksPerPage value
 });
 
 // Function to render individual book cards
@@ -141,28 +117,24 @@ function renderBookCard(book) {
   const isWishlisted = isBookInWishlist(id);
 
   // Create a book card dynamically
-  const bookCard = `
-    <div class="book-card">
-      <img src="${coverImage}" alt="Book Cover" class="book-cover" />
-      <div class="book-details">
-        <h3 class="book-title">${title}</h3>
-        <p class="book-author">by ${author}</p>
-        <p class="book-genre">Genre: ${genre}</p>
-        <p class="book-id">ID: ${id}</p>
-        <div class="book-btn">
-        <a href="details.html?id=${id}" class="more-details-button">More Details</a>
-        <button class="wishlist-button" data-id="${id}">
-          <i class="fa-solid fa-heart" style="color:${
-            isWishlisted ? "red" : "gray"
-          }"></i>
-        </button>
-        </div>
-      </div>
+  const bookCardElement = document.createElement('div');
+bookCardElement.classList.add('book-card');
+bookCardElement.innerHTML = `
+  <img src="${coverImage}" alt="Book Cover" class="book-cover" />
+  <div class="book-details">
+    <h3 class="book-title">${title}</h3>
+    <p class="book-author">by ${author}</p>
+    <p class="book-genre">Genre: ${genre}</p>
+    <p class="book-id">ID: ${id}</p>
+    <div class="book-btn">
+      <a href="details.html?id=${id}" class="more-details-button">More Details</a>
+      <button class="wishlist-button" data-id="${id}">
+        <i class="fa-solid fa-heart" style="color:${isWishlisted ? 'red' : 'gray'}"></i>
+      </button>
     </div>
-  `;
+  </div>`;
+bookContainer.appendChild(bookCardElement);
 
-  // Append the book card to the container
-  bookContainer.innerHTML += bookCard;
 }
 
 // Function to render pagination controls
@@ -246,3 +218,9 @@ function updateWishlistCount() {
 
 // Call this function after the page loads
 updateWishlistCount();
+
+
+function toggleMenu() {
+  const navLinks = document.querySelector('.nav-links');
+  navLinks.classList.toggle('active');
+}

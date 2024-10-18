@@ -5,15 +5,21 @@
 
 body {
   font-family: Arial, sans-serif;
+  padding-top: 70px;
 }
 
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding: 10px 20px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position:fixed ;
+  top: 0;
+  z-index: 999;
+  /* width: 100%; */
+  /* border: 1px solid black; */
 }
 
 .navbar .logo {
@@ -35,6 +41,15 @@ body {
 .navbar .logo span {
   font-size: 22px;
   font-weight: bold;
+}
+
+.nav-links{
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid black; */
+}
+.nav-links .search-bar{
+margin: 0 150px;
 }
 
 .navbar .search-bar {
@@ -60,6 +75,11 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
+
+.navbar .search-bar button:hover {
+  color: #333;
+}
+
 
 .navbar .icons {
   display: flex;
@@ -134,8 +154,6 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  /* align-items: center; */
-  /* gap: 20px; */
   row-gap: 40px;
   column-gap: 40px;
   margin: 0 30px 60px 30px;
@@ -200,10 +218,10 @@ body {
 }
 
 #pagination {
-  /* margin-top: 20px; */
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 50px;
   margin-bottom: 30px;
 }
 
@@ -285,4 +303,98 @@ body {
   50% {
     opacity: 0;
   }
+}
+
+
+/* Hide the hamburger icon on larger screens */
+.hamburger {
+  display: none;
+}
+
+/* Default mobile styles */
+@media (max-width: 480px) {
+  .navbar {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .nav-links select,
+  .nav-links .search-bar,
+  .nav-links .icons {
+    margin: 20px 0;
+  }
+  .nav-links select{
+    width: 100px;
+  }
+  .nav-links .search-bar {
+    width: 120px;
+    height: 30px;
+    margin: 0;
+  }
+  .nav-links .icons{
+    margin-right: 20px;
+  }
+
+  /* When the menu is open, show the links */
+  .nav-links.active {
+    display: flex;
+  }
+
+  #book-container {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    column-gap: 20px;
+    margin: 20px 10px; /* Adjusted margins */
+  }
+
+  /* Stack image and details vertically */
+  .book-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Book cover on top, center-aligned */
+  .book-cover {
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 100px; /* Make the image responsive */
+    height:150px; /* Maintain aspect ratio */
+  }
+
+  /* Adjust book details */
+  .book-title,
+  .book-author,
+  .book-genre,
+  .book-id {
+    text-align: center;
+  }
+  .book-id {
+    margin-bottom: 80px;
+  }
+  .book-btn {
+    position: absolute;
+    /* left: 20%; */
+    bottom: 25px;
+  }
+  .wishlist-button{
+    margin-left: 10px;
+  }
+  
 }
