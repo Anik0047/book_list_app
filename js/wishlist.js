@@ -1,18 +1,17 @@
-// Reference to the container where wishlisted books will be displayed
 const wishlistContainer = document.getElementById("wishlist-container");
 const emptyWishlist = document.getElementById("empty-wishlist");
 const loader = document.getElementById("loader");
 
-// Function to render a single book card
+
 function renderBookCard(book) {
   const title = book.title;
   const author =
     book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
-  const coverImage = book.formats["image/jpeg"] || "default-cover.jpg"; // Fallback if no cover image
+  const coverImage = book.formats["image/jpeg"] || "default-cover.jpg"; 
   const genre = book.subjects.length > 0 ? book.subjects[0] : "Unknown Genre";
   const id = book.id;
 
-  // Create a book card dynamically
+  
   const bookCard = `
         <div class="book-card">
             <img src="${coverImage}" alt="Book Cover" class="book-cover" />
@@ -28,15 +27,15 @@ function renderBookCard(book) {
         </div>
     `;
 
-  // Append the book card to the container
+  
   wishlistContainer.innerHTML += bookCard;
 }
 
-// Function to load the wishlist from localStorage
+
 function loadWishlist() {
   const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-  // Hide the loader as soon as we know whether there's content to show
+  
   loader.style.display = "none";
 
   if (wishlist.length === 0) {
@@ -44,13 +43,13 @@ function loadWishlist() {
     return;
   }
 
-  // Fetch book data for each id in the wishlist
+ 
   wishlist.forEach((id) => {
     fetch(`https://gutendex.com/books/${id}/`)
       .then((response) => response.json())
       .then((data) => {
-        const book = data; // Assuming API returns a book object
-        renderBookCard(book); // Render the book card
+        const book = data; 
+        renderBookCard(book); 
       })
       .catch((error) => {
         console.error("Error fetching wishlist book data:", error);
@@ -58,5 +57,5 @@ function loadWishlist() {
   });
 }
 
-// Load the wishlist when the page loads
+
 window.onload = loadWishlist;

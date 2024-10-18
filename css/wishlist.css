@@ -1,4 +1,3 @@
-/* Styling for the Wishlist page title */
 .title-wishlist {
   margin: 20px 0 40px;
   text-align: center;
@@ -6,7 +5,7 @@
   font-weight: bold;
 }
 
-/* Wishlist container with grid layout */
+
 #wishlist-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -17,7 +16,7 @@
   margin-bottom: 80px;
 }
 
-/* Styling for the buttons in the wishlist items */
+
 .book-btn-wishlist {
   position: absolute;
   bottom: 25px;
@@ -50,22 +49,22 @@
 
 
 
-/* For mobile devices */
+
 @media (max-width: 480px) {
-  /* Adjust the grid to show 1 column instead of 2 */
+  
   #wishlist-container {
     grid-template-columns: 1fr;
     row-gap: 20px;
     margin: 0 10px 30px 10px;
   }
 
-  /* Further adjust font size for the title */
+  
   .title-wishlist {
     font-size: 18px;
     margin: 20px 0 20px;
   }
 
-  /* Adjust the button size */
+  
   .book-btn-wishlist .more-details-button {
     padding: 5px 8px;
     font-size: 12px;

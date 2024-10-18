@@ -1,15 +1,14 @@
-// Get the book ID from the URL
 const params = new URLSearchParams(window.location.search);
 const bookId = params.get("id");
 
-// Reference to the details container
+
 const bookDetailsContainer = document.getElementById("book-details-container");
 
-// Fetch book details from the API using the book ID
+
 fetch(`https://gutendex.com/books/${bookId}/`)
   .then((response) => response.json())
   .then((book) => {
-    // Render the book details
+    
     const title = book.title;
     const author =
       book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
@@ -18,7 +17,7 @@ fetch(`https://gutendex.com/books/${bookId}/`)
     const description = book.description || "No description available.";
     document.getElementById("loader").style.display = "none";
 
-    // Update the details container with the fetched data
+    
     bookDetailsContainer.innerHTML = `
       <div class="book-details-page">
         <img src="${coverImage}" alt="Book Cover" class="book-cover" />
