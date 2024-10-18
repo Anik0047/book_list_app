@@ -7,8 +7,8 @@
 /* Flex container for book details page */
 .book-details-page {
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 30px; /* Add gap between book image and information */
   margin: 0 30px;
 }
