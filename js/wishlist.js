@@ -1,5 +1,6 @@
 // Reference to the container where wishlisted books will be displayed
 const wishlistContainer = document.getElementById("wishlist-container");
+const loader = document.getElementById("loader");
 
 // Function to render a single book card
 function renderBookCard(book) {
@@ -9,7 +10,6 @@ function renderBookCard(book) {
   const coverImage = book.formats["image/jpeg"] || "default-cover.jpg"; // Fallback if no cover image
   const genre = book.subjects.length > 0 ? book.subjects[0] : "Unknown Genre";
   const id = book.id;
-  document.getElementById("loader").style.display = "none";
 
   // Create a book card dynamically
   const bookCard = `
@@ -35,8 +35,11 @@ function renderBookCard(book) {
 function loadWishlist() {
   const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
+  // Hide the loader as soon as we know whether there's content to show
+  loader.style.display = "none";
+
   if (wishlist.length === 0) {
-    wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
+    wishlistContainer.innerHTML = "<p class='empty-wishlist'>Your wishlist is empty.</p>";
     return;
   }
 

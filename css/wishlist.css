@@ -41,7 +41,12 @@
   background-color: white;
 }
 
-/* Media queries for responsiveness */
+.empty-wishlist{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 800;
+}
 
 
 
