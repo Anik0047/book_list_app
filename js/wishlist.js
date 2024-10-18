@@ -1,5 +1,6 @@
 // Reference to the container where wishlisted books will be displayed
 const wishlistContainer = document.getElementById("wishlist-container");
+const emptyWishlist = document.getElementById("empty-wishlist");
 const loader = document.getElementById("loader");
 
 // Function to render a single book card
@@ -39,7 +40,7 @@ function loadWishlist() {
   loader.style.display = "none";
 
   if (wishlist.length === 0) {
-    wishlistContainer.innerHTML = "<p class='empty-wishlist'>Your wishlist is empty.</p>";
+    emptyWishlist.innerHTML = "<p class='empty-wishlist'>Your wishlist is empty.</p>";
     return;
   }
 
